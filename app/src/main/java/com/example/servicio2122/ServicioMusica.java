@@ -17,10 +17,18 @@ public class ServicioMusica extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intenc, int flags, int idArranque) {
-        Toast.makeText(this, "Servicio arrancado " + idArranque,
-                Toast.LENGTH_SHORT).show();
-        reproductor.start();
+    public int onStartCommand(Intent intent, int flags, int idArranque) {
+        //Compruebo la accion del intent
+        switch (intent.getAction()) {
+            case "start":
+                Toast.makeText(this, "Servicio arrancado " + idArranque,
+                        Toast.LENGTH_SHORT).show();
+                reproductor.start();
+                break;
+            case "stop":
+                stopSelf();
+                break;
+        }
         //Le dice al SO que si se elimina el servicio por falta de memoria,
         //vuelva a reiniciar el servicio
         return START_STICKY;
